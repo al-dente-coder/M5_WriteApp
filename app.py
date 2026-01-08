@@ -1,12 +1,12 @@
+"""
+注：入力項目数を変更する場合は、platformio.iniも変更すること
+"""
+
 import html
 import os
 import subprocess
 
 import streamlit as st
-
-st.title("名前入力")
-
-name = st.text_input("名前を入力してください")
 
 
 def run_upload(m5_project_path, user_name):
@@ -19,7 +19,9 @@ def run_upload(m5_project_path, user_name):
     """
     # 引数を環境変数に登録
     env = os.environ.copy()
+    # === 入力項目数を変更する場合はここも変更 ======
     env["USER_NAME"] = user_name
+    # ============================================
     cmd = ["pio", "run", "-d", str(m5_project_path)]
     # 書き込みの為のオプションを追加
     cmd.extend(["-t", "upload"])
@@ -55,6 +57,10 @@ def render_log(output_box, lines):
 
 
 # app
+st.title("M5書き込みアプリ")
+# === 入力項目数を変更する場合はここを変更 ======
+name = st.text_input("名前を入力してください")
+# ============================================
 if st.button("書き込み"):
     if name.strip():
         # m5への書き込み
